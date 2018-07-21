@@ -32,6 +32,19 @@ def press_key(key_id):
 def release_key(key_id):
   pyautogui.keyUp(keys[key_id])
 
+def check_exit_i(input_mid):
+  if msvcrt.kbhit():
+    if msvcrt.getwch() == "-":
+      input_mid.close()
+      pygame.quit()
+      exit()
+
+def check_exit():
+  if msvcrt.kbhit():
+    if msvcrt.getwch() == "-":
+      pygame.quit()
+      exit()
+
 
 pygame.init()
 mid.init()
@@ -54,7 +67,5 @@ while playing:
         elif mkey[0] == 128:
           release_key(mkey[1])
 
-      if msvcrt.kbhit():
-        if msvcrt.getwch() == "-":
-          input_mid.close()
-          exit()
+      check_exit_i(input_mid)
+  check_exit()
