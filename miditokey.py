@@ -26,11 +26,12 @@ def midi_in(in_id):
 
 
 def press_key(key_id):
-  pyautogui.keyDown(keys[key_id])
+  pyautogui.keyDown(key_list[key_id])
 
 
 def release_key(key_id):
-  pyautogui.keyUp(keys[key_id])
+  pyautogui.keyUp(key_list[key_id])
+
 
 def check_exit_i(input_mid):
   if msvcrt.kbhit():
@@ -39,6 +40,7 @@ def check_exit_i(input_mid):
       pygame.midi.quit()
       pygame.quit()
       exit()
+
 
 def check_exit():
   if msvcrt.kbhit():
@@ -52,6 +54,9 @@ pygame.init()
 mid.init()
 
 playing = True
+
+key_list = keys.split(",")
+
 while playing:
 
   in_id = mid.get_default_input_id()

@@ -3,12 +3,13 @@ import msvcrt
 
 note_names = "C C#D D#E F F#G G#A A#B "
 
-keys = ['']*128
-
-k = open("keys.txt", "r+")
-for i in range(128):
-  keys[i] = k.readline().rstrip()
+k = open("keys.txt", "r")
+keys = k.read().split(",")
 k.close()
+
+if len(keys) != 128:
+  keys = [""]*128
+
 def press_key(key_id):
   
   print("Press a key to bind.")
@@ -20,9 +21,13 @@ def press_key(key_id):
       cha = msvcrt.getwch()
       if cha == str(cha):
         keys[key_id] = cha
-        with open("keys.txt", 'w') as k:
-          for i in keys:
-            k.write(i + "\n")
+        k = open("keys.txt", "w")
+        p = ""
+        for i in range(128):
+          p += str(keys[i] + ",")
+        k.write(p)
+
+        k.close()
 
         note = note_names[(mkey[1]%12)*2:((mkey[1]%12)*2)+2] + str((int(mkey[1]/12))-1)
         print(note + " is now bound to " + cha + "\n")
@@ -41,7 +46,7 @@ if __name__ == "__main__":
 
     input_mid = mid.Input(in_id)
     input_mid.poll()
-    print("Press a note, or press '-' to exit.")
+    print("\nPress a note, or press '-' to exit.")
 
     while mid.get_default_input_id() != -1:
 
@@ -50,7 +55,6 @@ if __name__ == "__main__":
 
         if mkey[0] == 144:
           print(note_names[(mkey[1]%12)*2:((mkey[1]%12)*2)+2] + str((int(mkey[1]/12))-1))
-          press_key(mkey[1])
           print("Press another note, or press '-' to exit.")
           input_mid.close()
           input_mid = mid.Input(in_id)
