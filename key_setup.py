@@ -38,7 +38,7 @@ def press_key(key_id):
 if __name__ == "__main__":
   pygame.init()
   mid.init()
-  
+
   setting = True
   in_id = mid.get_default_input_id()
 
@@ -54,7 +54,6 @@ if __name__ == "__main__":
         mkey = input_mid.read(1)[0][0]
 
         if mkey[0] == 144:
-          print(note_names[(mkey[1]%12)*2:((mkey[1]%12)*2)+2] + str((int(mkey[1]/12))-1))
           press_key(mkey[1])
           print("Press another note, or press '-' to exit.")
           input_mid.close()
