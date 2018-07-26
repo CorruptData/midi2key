@@ -36,12 +36,14 @@ def check_exit_i(input_mid):
   if msvcrt.kbhit():
     if msvcrt.getwch() == "-":
       input_mid.close()
+      pygame.midi.quit()
       pygame.quit()
       exit()
 
 def check_exit():
   if msvcrt.kbhit():
     if msvcrt.getwch() == "-":
+      pygame.midi.quit()
       pygame.quit()
       exit()
 
@@ -56,13 +58,14 @@ while playing:
   
   if in_id != -1:
 
-    input_mid = mid.Input(in_id)
+    input_mid = mid.Input(in_id, 10)
 
     while mid.get_default_input_id() != -1 and playing:
 
-      if input_mid.poll():
-        mkey = input_mid.read(1)[0][0]
+      while input_mid.poll():
+        mkey = input_mid.read(10)[0][0]
         if mkey[0] == 144:
+          print(mkey[1])
           press_key(mkey[1])
         elif mkey[0] == 128:
           release_key(mkey[1])

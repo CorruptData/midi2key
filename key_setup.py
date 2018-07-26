@@ -5,11 +5,10 @@ note_names = "C C#D D#E F F#G G#A A#B "
 
 keys = ['']*128
 
-with open("keys.txt", "r+") as k:
-  keys = k.read().splitlines()
-  if keys == '':
-    keys = ['']*128
-
+k = open("keys.txt", "r+")
+for i in range(128):
+  keys[i] = k.readline().rstrip()
+k.close()
 def press_key(key_id):
   
   print("Press a key to bind.")
@@ -59,6 +58,7 @@ if __name__ == "__main__":
       if msvcrt.kbhit():
         if msvcrt.getwch() == "-":
           input_mid.close()
+          pygame.midi.quit()
           pygame.quit()
           exit()
 
