@@ -12,6 +12,8 @@ SCREENWIDTH = 1040
 SCREENHEIGHT = 240
 FULLSCREEN = False
 
+pyautogui.PAUSE = 0
+
 #Start Pygame
 
 pygame.init()
@@ -146,7 +148,7 @@ while playing:
 
   if input_mid.poll():
     ins = input_mid.read(40)
-    
+
     for i in range(len(ins)):
       mkey = ins[i][0]
       if mkey[0] == 144:
