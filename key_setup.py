@@ -39,7 +39,7 @@ if __name__ == "__main__":
   pygame.init()
   mid.init()
 
-  setting = Truew
+  setting = True
   in_id = mid.get_default_input_id()
 
   if in_id != -1:

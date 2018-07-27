@@ -116,10 +116,15 @@ key_list = keys.split(",")
 in_id = mid.get_default_input_id()
 
 if in_id != -1:
-  input_mid = mid.Input(in_id)
+  input_mid = mid.Input(in_id, 40)
 
 else:
   quit()
+
+
+print ("Who is there?")
+
+print(mid.get_device_info(in_id))
 
 
 while playing:
@@ -139,13 +144,20 @@ while playing:
       input_mid.close()
       quit()
 
-  while input_mid.poll():
-    mkey = input_mid.read(1)[0][0]
-    if mkey[0] == 144:
-      print(mkey[1])
-      press_key(mkey[1])
-    elif mkey[0] == 128:
-      release_key(mkey[1])
+  if input_mid.poll():
+    ins = input_mid.read(40)
+    
+    for i in range(len(ins)):
+      mkey = ins[i][0]
+      if mkey[0] == 144:
+        print(mkey[1])
+        if mkey[2] != 0:
+          press_key(mkey[1])
+        else:
+          release_key(mkey[1])
+
+      elif mkey[0] == 128:
+        release_key(mkey[1])
 
     check_exit_i(input_mid)
   check_exit()
